@@ -1,0 +1,9 @@
+{
+  "1bing": {
+    "mock": true,
+    "code": "400",
+    "data": {
+      "msg": "模拟数据~~~1bing"
+    }
+  }
+}
