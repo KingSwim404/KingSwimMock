@@ -20,16 +20,18 @@ object MockHelper {
     /**
      * 初始化所有mock数据
      * 备注：最好是在Application里面调用，提前准备好数据
+     * @param assetsPath 文件名或者文件夹名
+     * @param isFolder  是否是文件夹
      */
-    fun init(context: Context, assetsFileName: String, isFolder: Boolean = false) {
+    fun init(context: Context, assetsPath: String, isFolder: Boolean = false) {
         mockData.clear()
         if (isFolder) {
-            context.assets.list(assetsFileName)?.forEach {
-                val parserMap = parserMockJson(context, PathUtils.join(assetsFileName,it))
+            context.assets.list(assetsPath)?.forEach {
+                val parserMap = parserMockJson(context, PathUtils.join(assetsPath,it))
                 mockData.putAll(parserMap)
             }
         } else {
-            val parserMap = parserMockJson(context, assetsFileName)
+            val parserMap = parserMockJson(context, assetsPath)
             mockData.putAll(parserMap)
         }
     }
@@ -49,6 +51,7 @@ object MockHelper {
         for (key in keys) {
             if (url.contains(key)) {
                 val result = mockData[key]
+                //除非手动指定为false,否则默认只要配置了模拟数据就会使用
                 return if ( result != null && result["mock"] != false) {
                     GsonUtils.toJson(result)
                 } else ""
@@ -60,12 +63,12 @@ object MockHelper {
 
     private fun parserMockJson(
         context: Context,
-        assetsFileName: String
+        assetsPath: String
     ): MutableMap<String, MutableMap<String, Any>> {
         val parserMap: MutableMap<String, MutableMap<String, Any>> = HashMap()
-        if (openMock && assetsFileName.isNotEmpty()) {
+        if (openMock && assetsPath.isNotEmpty()) {
             try {
-                val inputStream = context.assets.open(assetsFileName)
+                val inputStream = context.assets.open(assetsPath)
                 val mockData = ConvertUtils.inputStream2String(inputStream, "UTF-8")
                 if (mockData.isNotEmpty()) {
                     val type = object : TypeToken<MutableMap<String, MutableMap<String, Any>>>() {}.type
