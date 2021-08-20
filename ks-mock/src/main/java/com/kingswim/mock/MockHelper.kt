@@ -1,21 +1,17 @@
 package com.kingswim.mock
 
 import android.content.Context
-import com.google.gson.GsonBuilder
-import com.blankj.utilcode.BuildConfig
-import android.text.TextUtils
-import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.PathUtils
+
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
-import java.util.*
 import kotlin.collections.HashMap
 
 object MockHelper {
     const val TAG = "MOCK_MODULE"
     private val mockData: MutableMap<String, MutableMap<String, Any>> = HashMap()
     private var openMock: Boolean = false
+    private var gson: Gson = Gson()
 
     /**
      * 初始化所有mock数据
@@ -27,7 +23,7 @@ object MockHelper {
         mockData.clear()
         if (isFolder) {
             context.assets.list(assetsPath)?.forEach {
-                val parserMap = parserMockJson(context, PathUtils.join(assetsPath,it))
+                val parserMap = parserMockJson(context, ConvertUtils.join(assetsPath,it))
                 mockData.putAll(parserMap)
             }
         } else {
@@ -53,7 +49,7 @@ object MockHelper {
                 val result = mockData[key]
                 //除非手动指定为false,否则默认只要配置了模拟数据就会使用
                 return if ( result != null && result["mock"] != false) {
-                    GsonUtils.toJson(result)
+                    gson.toJson(result)
                 } else ""
             }
         }
@@ -73,7 +69,7 @@ object MockHelper {
                 if (mockData.isNotEmpty()) {
                     val type = object : TypeToken<MutableMap<String, MutableMap<String, Any>>>() {}.type
                     //解析文件获得的总体Json
-                    val alLData = GsonUtils.fromJson<MutableMap<String, MutableMap<String, Any>>>(mockData, type)
+                    val alLData = gson.fromJson<MutableMap<String, MutableMap<String, Any>>>(mockData, type)
                     for ((urlPath, value) in alLData) {
                         //判断 key里面是否含有多个 key.指向同一个 value
                         //key之间用";"分割

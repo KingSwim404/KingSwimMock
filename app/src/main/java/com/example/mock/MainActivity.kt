@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         //最好在Application里面初始化
         MockHelper.setMockMode(BuildConfig.DEBUG)
         //MockHelper.init(this,"bing.json") //针对单个文件
-        MockHelper.init(this,"mock",true) //针对多个文件
+        MockHelper.init(this,"bing.json",) //针对多个文件
         //开始模拟数据
         mock()
     }
