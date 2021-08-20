@@ -6,6 +6,8 @@
 
 一个简易的本地模拟网络JSON数据的小工具。
 
+备注：感谢大佬[柯基](https://github.com/Blankj),工具类的帮助。
+
 ## 使用说明：
 
 ### 1、将`jitpack`添加到项目的`build.gradle`文件中，如下：
@@ -24,7 +26,6 @@ allprojects {
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    implementation 'com.blankj:utilcodex:1.30.6'
     implementation 'com.github.KingSwim404:KingSwimMock:1.0.0'          
  }
 ```
