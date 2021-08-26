@@ -4,7 +4,7 @@
 
 # KingSwimMock:
 
-一个简易的本地模拟网络JSON数据的小工具。
+一个简易的本地模拟网络JSON数据的小工具 ( com.github.KingSwim404:KingSwimMock:1.0.1 )。
 
 备注：感谢大佬[柯基](https://github.com/Blankj),工具类的帮助。
 
@@ -140,3 +140,6 @@ sourceSets{
 
  <img src="img/file.png" style="zoom:75%;" />
 
+
+### 6、协议
+[Apache License 2.0](https://github.com/KingSwim404/KingSwimMock/blob/master/LICENSE)
